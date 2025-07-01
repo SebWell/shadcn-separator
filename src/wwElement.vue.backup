@@ -1,8 +1,8 @@
 <template>
   <div 
     :class="separatorClasses"
-    :aria-orientation="orientation"
-    :role="decorative ? 'presentation' : 'separator'"
+    :aria-orientation="content.orientation"
+    :role="content.decorative ? 'presentation' : 'separator'"
   />
 </template>
 
@@ -13,14 +13,21 @@ import { cn } from './cn.js'
 export default {
   name: 'WewebSeparator',
   props: {
-        // Individual props will be auto-generated based on the component type
-        // This is a placeholder that will be manually refined per component
-    },
+    content: {
+      type: Object,
+      required: true,
+      default: () => ({
+        orientation: 'horizontal',
+        decorative: true,
+        customClasses: ''
+      })
+    }
+  },
   setup(props) {
     const separatorClasses = computed(() => cn(
       "shrink-0 bg-border",
-      props.orientation === "horizontal" ? "h-[1px] w-full" : "h-full w-[1px]",
-      props.customClasses
+      props.content.orientation === "horizontal" ? "h-[1px] w-full" : "h-full w-[1px]",
+      props.content.customClasses
     ))
 
     return {
